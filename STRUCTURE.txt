@@ -1,4 +1,10 @@
 Project structure
 (note for developers)
 
+The mapper (keez) is an C++ object, which has the following public methods:
+1. blockKey and unblockKey -- remap key with xmodmap in order to prevent default handler from occuring.
+2. sethandler -- set user handler to event (key up/down/press)
+3. sendkey(up/down/press, code) -- imitate keyboard event
+4. reset -- restore initial xmodmapping
 
+On Ctrl+C 'reset' is also called to restore initial xmodmapping
