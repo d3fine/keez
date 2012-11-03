@@ -1,4 +1,4 @@
 keez
 ====
 
-A key-mapping linux tool
+A key-mapping linux tool.
