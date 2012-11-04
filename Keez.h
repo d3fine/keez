@@ -4,9 +4,12 @@
 #include <map>
 
 #include "XModMap.h"
+#include "KeyListener.h"
 
 class Keez
 {
+	Keez(const Keez&){}
+	void operator=(const Keez&){}
 	public:
 		Keez();
 		~Keez();
@@ -17,4 +20,5 @@ class Keez
 	private:
 		bool mRunning;
 		XModMap::modmap mOrigMap;
+		KeyListener mKL;
 };

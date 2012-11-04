@@ -65,6 +65,8 @@ void Keez::start(const set<int>& block_keys)
 	XModMap::setMap(cur_map);
 
 	mRunning=true;
+
+	mKL.start(NULL);
 }
 
 void Keez::stop()
@@ -74,6 +76,8 @@ void Keez::stop()
 		cerr << "ERROR: Keez::stop: Not started" << endl;
 		abort();
 	}
+
+	mKL.stop();
 
 	// restore orig map
 	XModMap::setMap(mOrigMap);
