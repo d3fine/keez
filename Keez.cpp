@@ -85,3 +85,9 @@ void Keez::stop()
 
 	mRunning=false;
 }
+
+void Keez::sendKey(int code, bool down)
+{
+	cerr << "Not implemented " << __FUNCTION__ << " in " << __FILE__ << ":" << __LINE__ << endl;
+	abort();
+}

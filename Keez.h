@@ -17,6 +17,8 @@ class Keez
 		void start(const std::set<int>& block_keys);
 		void stop();
 
+		void sendKey(int code, bool down);
+
 	private:
 		bool mRunning;
 		XModMap::modmap mOrigMap;
