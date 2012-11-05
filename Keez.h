@@ -20,5 +20,6 @@ class Keez
 	private:
 		bool mRunning;
 		XModMap::modmap mOrigMap;
+		std::map<int, int> mKeysMap;
 		KeyListener mKL;
 };

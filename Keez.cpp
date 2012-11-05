@@ -6,7 +6,7 @@
 
 using namespace std;
 
-static XModMap::modmap unmap(const XModMap::modmap& orig, const set<int>& keys)
+static XModMap::modmap unmap(const XModMap::modmap& orig, const set<int>& keys, map<int, int>& kmap)
 {
 	XModMap::modmap res = orig;
 	int ptr=255;
@@ -34,6 +34,7 @@ static XModMap::modmap unmap(const XModMap::modmap& orig, const set<int>& keys)
 
 		res[ptr] = res[*it];
 		res[*it] = "";
+		kmap[*it]=ptr;
 	}
 
 	return res;
@@ -60,7 +61,7 @@ void Keez::start(const set<int>& block_keys)
 
 	// make new and store current xmodmap
 	mOrigMap = XModMap::getMap();
-	XModMap::modmap cur_map = unmap(mOrigMap, block_keys);
+	XModMap::modmap cur_map = unmap(mOrigMap, block_keys, mKeysMap);
 
 	XModMap::setMap(cur_map);
 
