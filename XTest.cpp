@@ -61,7 +61,7 @@ static void eventCallback(XPointer priv, XRecordInterceptData* hook)
 	else if(t==KeyRelease)
 	{
 		if(mCallback!=NULL)
-			mCallback(c, true);
+			mCallback(c, false);
 	}
 	
 	XRecordFreeData(hook);
@@ -74,6 +74,8 @@ void XTest::start(void(*cb)(int,bool))
 		cerr << "ERROR: XTest::start: already running" << endl;
 		abort();
 	}
+
+	XTest::mRunning = true;
 
 	mCallback = cb;
 
@@ -123,6 +125,8 @@ void XTest::start(void(*cb)(int,bool))
 	}
 
 	// TODO: FakeEvent255?
+    XTestFakeKeyEvent(userData.ctrlDisplay, 255, True, CurrentTime);
+    XTestFakeKeyEvent(userData.ctrlDisplay, 255, False, CurrentTime);
 
 	if(!XRecordEnableContext(display, recContext, eventCallback, (XPointer) &userData))
 	{
@@ -138,14 +142,19 @@ void XTest::stop()
 		cerr << "ERROR: XTest::stop: not running" << endl;
 		abort();
 	}
+
+	XTest::mRunning = false;
+
 	if(!XRecordDisableContext(display, recContext))
 	{
 		fprintf(stderr, "ERROR: XRecord disable context failed\n");
 		abort();
 	}
+	/*
 	if(!XCloseDisplay(display))
 	{
 		fprintf(stderr, "ERROR: XCloseDisplay failed\n");
 		abort();
 	}
+	*/
 }

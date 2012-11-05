@@ -7,6 +7,11 @@
 
 using namespace std;
 
+void handler(int code, bool down)
+{
+	cout << "KEY " << code << " - " << down << endl;
+}
+
 int main(int argc, char** argv)
 {
 //	Keez k;
@@ -38,9 +43,13 @@ int main(int argc, char** argv)
 	block_keys.insert(c1);
 	block_keys.insert(c2);
 
-	k.start(block_keys);
+	cout << "Starting Keez" << endl;
+	k.start(block_keys, handler);
+	cout << "Keez started" << endl;
 
 	sleep(10);
 
+	cout << "Trying to stop Keez" << endl;
 	k.stop();
+	cout << "Keez stopped" << endl;
 }

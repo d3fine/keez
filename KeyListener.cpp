@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "XTest.h"
+
 using namespace std;
 
 KeyListener::KeyListener()
@@ -44,12 +46,12 @@ void KeyListener::stop()
 		abort();
 	}
 
-	pthread_cancel(mTid);
-	pthread_join(mTid, NULL);
-
-	cout << "thread canceled" << endl;
-
+	cout << "stopping XTest" << endl;
+	XTest::stop();
+	cout << "XTest stopped" << endl;
 	mRunning = false;
+	cout << "Joining thread, ptr=" << this << endl;
+	pthread_join(mTid, NULL);
 }
 
 void* KeyListener::threadRoutine(void* arg)
@@ -58,7 +60,10 @@ void* KeyListener::threadRoutine(void* arg)
 
 	cout << "thread started" << endl;
 
-	while(true)
+	XTest::start(k.pHandler);
+
+	cout << "Thread: kl=" << &k << endl;
+	while(k.mRunning)
 	{
 		usleep(1000);
 	}

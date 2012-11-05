@@ -51,7 +51,7 @@ Keez::~Keez()
 		stop();
 }
 
-void Keez::start(const set<int>& block_keys)
+void Keez::start(const set<int>& block_keys, void(*h)(int,bool))
 {
 	if(mRunning)
 	{
@@ -65,9 +65,11 @@ void Keez::start(const set<int>& block_keys)
 
 	XModMap::setMap(cur_map);
 
+	mHandler=h;
+
 	mRunning=true;
 
-	mKL.start(NULL);
+	mKL.start(mHandler);
 }
 
 void Keez::stop()
@@ -78,16 +80,14 @@ void Keez::stop()
 		abort();
 	}
 
+	XModMap::setMap(mOrigMap);
+	
+	cout << "xmodmap restored, stopping listener" << endl;
 	mKL.stop();
+	cout << "Listener stopped" << endl;
 
 	// restore orig map
-	XModMap::setMap(mOrigMap);
 
 	mRunning=false;
 }
 
-void Keez::sendKey(int code, bool down)
-{
-	cerr << "Not implemented " << __FUNCTION__ << " in " << __FILE__ << ":" << __LINE__ << endl;
-	abort();
-}

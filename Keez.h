@@ -6,6 +6,12 @@
 #include "XModMap.h"
 #include "KeyListener.h"
 
+class KeySender
+{
+	public:
+		virtual void sendKey(int code, bool down)=0;
+};
+
 class Keez
 {
 	Keez(const Keez&){}
@@ -14,14 +20,15 @@ class Keez
 		Keez();
 		~Keez();
 
-		void start(const std::set<int>& block_keys);
+		void start(const std::set<int>& block_keys,
+				void(*)(int,bool));
 		void stop();
-
-		void sendKey(int code, bool down);
 
 	private:
 		bool mRunning;
 		XModMap::modmap mOrigMap;
 		std::map<int, int> mKeysMap;
 		KeyListener mKL;
+
+		void(*mHandler)(int,bool);
 };
